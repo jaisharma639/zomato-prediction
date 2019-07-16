@@ -1,0 +1,12 @@
+<h1>Select Match</h1>
+
+
+{% if all_matches %}
+    <ul>
+    {% for match in all_matches %}
+        <li><a href="/predict/{{ match.id }}/">{{ match.match_text }}</a></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No polls are available.</p>
+{% endif %}
