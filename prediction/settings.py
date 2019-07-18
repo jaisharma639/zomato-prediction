@@ -17,6 +17,12 @@ BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 LOGIN_REDIRECT_URL = "/predict"
 
+endpoint_mapping = {"cricbuzz" : "https://www.cricbuzz.com/match-api/livematches.json"}
+PARTNER = 'cricbuzz'
+POLLING_ENDPOINT = endpoint_mapping[PARTNER] # Change this to connect to a diff point
+
+POLLING_INTERVAL = os.environ.get("POLLING_INTERVAL", 3)
+
 MIDDLEWARE_CLASSES = (
     'middleware.LoginRequiredMiddleware',
 )
@@ -126,3 +132,12 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/1.11/howto/static-files/
 
 STATIC_URL = '/static/'
+
+EMAIL_USE_TLS = True
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'
+EMAIL_HOST_PASSWORD = 'zomato@1234' #my gmail password
+EMAIL_HOST_USER = 'jai.sharma8693@gmail.com' #my gmail username
+EMAIL_PORT = 587
+DEFAULT_FROM_EMAIL = EMAIL_HOST_USER
+

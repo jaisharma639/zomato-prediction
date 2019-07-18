@@ -11,11 +11,13 @@ urlpatterns = [
     url(r'^answer/(?P<question_id>[0-9]+)/$', views.answer),
     url(r'^signup/$', views.signup, name='signup'),
     url(r'^logout/$', views.logout_view, name='logout'),
-    url(r'^login/$', login_not_required(auth_views.LoginView.as_view(template_name='registration/login.html')), name='login'),
-    url(r'^password_reset/$', auth_views.PasswordChangeView.as_view(), name='password_reset'),
+    url(r'^login/$', login_not_required(auth_views.LoginView.as_view(
+        template_name='registration/login.html')), name='login'),
+    url(r'^password_reset/$', auth_views.PasswordChangeView.as_view(),
+        name='password_reset'),
     url(r'^user_info/$', views.user_info, name='user'),
-     url(r'^get_model_data/$', views.get_model_data, name='model_data'),
-
-    
+    url(r'^get_model_data/$', views.get_model_data, name='model_data'),
+    url(r'^send/$', views.send, name='send_mail'),
+    url(r'^my_activity/$', views.activity, name='my_activity'),
+    url(r'^leaderboard/$', views.leaderboard, name='leaderboard'),
 ]
-

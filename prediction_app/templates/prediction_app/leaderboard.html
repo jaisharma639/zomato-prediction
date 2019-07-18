@@ -1,0 +1,13 @@
+<h1>Leaderboard</h1>
+
+
+
+{% if leaderboard %}
+    <ul>
+    {% for user_info in leaderboard %}
+        <li>{{ user_info.user_field__username }} <h4>Reward : {{user_info.user_reward}}</h4></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No activity recorded</p>
+{% endif %}

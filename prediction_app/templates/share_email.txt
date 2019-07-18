@@ -1,0 +1,10 @@
+Hi,
+
+{{ sender }} invited you to participate in Zomato Premier League. They earned {{ reward }} credits by predicting !
+
+Here you can predict and win rewards.
+
+Please follow the link below to participate:
+{{ link }}
+
+Thanks !

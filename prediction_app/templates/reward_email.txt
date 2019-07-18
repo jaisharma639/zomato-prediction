@@ -1,0 +1,5 @@
+Hi,
+
+The prediction for {{ match }} has concluded. You've won {{ reward }} credits.
+
+Thanks !

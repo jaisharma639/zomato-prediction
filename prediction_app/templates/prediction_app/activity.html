@@ -1,0 +1,28 @@
+<h1>My Activity</h1>
+
+<h2>Share this with friends to let them know about ZPL</h2>
+
+
+<form action="/predict/send/?reward={{ total_reward }}" method="post">
+{% csrf_token %}
+    <label for="email">Enter comma separated mail: </label>
+    <input id="mail" type="text" name="mail" value="{{ current_name }}">
+    <input type="submit" value="OK">
+</form>
+
+<h2>Total Reward :  {{ total_reward }}</h2>
+
+
+
+{% if all_activity %}
+    <ul>
+    {% for act in all_activity %}
+        <li>{{ act.information }} <h3>Reward : {{act.reward}}</h3></li>
+    {% endfor %}
+    </ul>
+{% else %}
+    <p>No activity recorded</p>
+{% endif %}
+
+
+
