@@ -25,15 +25,15 @@ class Calculator(object):
         except IndexError:
             print 'Please update eligibility for the question ', self.question
             return False
-        print 'eligibility', eligibility
-        print 'correct_ans', self.correct_ans
-        print 'get_entries_to_update', self.get_entries_to_update()
+        print 'The eligibility for given question is : ', eligibility
+        print 'Correct answer for given question is : ', self.correct_ans
+        print 'Updating the following entires : ', self.get_entries_to_update()
         for entry in self.get_entries_to_update():
             chosen_ans = set(entry.chosen_ans.split(','))
-            print 'chosen_ans', chosen_ans, 'entry', entry
+            print 'The answer chosen by the user was : ', chosen_ans
             percentage = self.percentage_calculate(
                 chosen_ans, self.correct_ans)
-            print 'percentage', percentage
+            print 'User scored percentage : ', percentage
             try:
                 reward = eligibility[percentage]
             except KeyError:

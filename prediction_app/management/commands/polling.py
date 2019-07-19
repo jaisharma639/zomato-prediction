@@ -15,7 +15,7 @@ class Command(BaseCommand):
 
     def handle(self, *args, **options):
         while True:
-            print 'reading data...'
+            print 'Started reading data......'
             if not options['read_from_file'][0]:
                 r = requests.get(url=settings.POLLING_ENDPOINT)
                 data = r.json()

@@ -2,6 +2,7 @@ from prediction_app.models import ActiveMatches
 from django.conf import settings
 import importlib
 from .calculator import Calculator
+from .notification import Notification
 
 p = importlib.import_module("prediction_app.interfaces."+settings.PARTNER)
 
@@ -25,21 +26,20 @@ class Processor(object):
     def update_db(self):
         updates = self.get_updates()
         for each_match in updates:
-            print 'updating...'
+            print 'Found new updates......'
             ActiveMatches.create_entry(
                 each_match, self.partner.get_match_title(each_match))
-        # Tables keeps on growing?
-        # deletes = self.get_updates(True)
-        # if deletes:
-        #     print 'deleting'
-        #     ActiveMatches.delete_entries(deletes)
+        deletes = self.get_updates(True)
+        if deletes:
+            print 'Deleting outdated matches...'
+            ActiveMatches.delete_entries(deletes)
         return
 
     def get_answer(self, questions, match_id):
         for q in questions:
-            print 'q', q
+            print 'For the question : ', q
             correct_ans = self.partner.get_answer(q.question_type, match_id)
-            print 'correct answer is', correct_ans
+            print 'The correct answer is', correct_ans
             calculator = Calculator(q, correct_ans)
             done = calculator.calculate()
             if not done:
@@ -53,17 +53,15 @@ class Processor(object):
         running_matches = ActiveMatches.get_running_matches()
         to_update = [match for match in running_matches
                      if match.match_id in completed_matches]
-        print 'to_update', to_update
+        print 'Matches concluded : ', to_update
         for each_match in to_update:
-            print 'each_match', each_match
             question_to_update = each_match.question_set.all()
             updated = self.get_answer(question_to_update, each_match.match_id)
             if not updated:
                 return
-            each_match.match_completed = True
-            # each_match.save()
-            from .notification import Notification
-            print 'triggering notification service', question_to_update
+            each_match.match_completed = True # Comment for debugging
+            each_match.save()
+            print 'Sending notification to all users who answerd these questions : ', question_to_update
             notification = Notification(question_to_update, each_match.match_text)
             notification.notify()
 

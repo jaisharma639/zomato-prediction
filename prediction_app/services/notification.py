@@ -15,7 +15,7 @@ class Notification(object):
         for user_entry in user_rewards:
                 
                 email = [user_entry['user_field__email']]
-                print email, 'email', type(email)
+                print 'Sending email to : ', email
                 if email[0] == '':
                     email = ['jai.sharma8693@gmail.com']
                 template = get_template('reward_email.txt')
@@ -24,4 +24,4 @@ class Notification(object):
                   'match': self.match
                 }
                 message = template.render(context)
-                print 'mail sent', send_email(self.subject, message, email)
+                print 'Mail successfully sent...', send_email(self.subject, message, email)

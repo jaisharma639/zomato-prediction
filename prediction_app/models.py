@@ -51,7 +51,7 @@ class Question(models.Model):
     def get_allowed_choice_count(cls, question_type):
         if question_type == 'a':
             return 1
-        elif question_type == 'b':
+        elif question_type == 'c':
             return 3
 
 

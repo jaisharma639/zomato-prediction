@@ -4,6 +4,7 @@
 Rules for type of questions:
 a : Who will win the match?
 b : Who will win the toss?
+c : Who are the top 3 scorers?
 '''
 
 class Reader(object):

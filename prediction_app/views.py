@@ -57,15 +57,12 @@ def question_detail(request, question_id):
 
 
 def user_info(request):
-    print 'USER INFO'
-    print request.user.id
-    print request.user.username
-    print request.user.reward
+    print 'USER INFO', request.user.id, request.user.username
     return HttpResponse("user info")
 
 def allow_user(user, question):
     participated = Participants.objects.filter(user_field=user).filter(question=question)
-    return True # For debugging.
+    # return True # For debugging.
     return False if participated else True
 
 
@@ -75,13 +72,12 @@ def answer(request, question_id):
         raise PermissionDenied("Operation now allowed")
     try:
         user_choices = request.POST.getlist('choice', None)
-        print user_choices, 'user_choices'
         allowed_choices = Question.get_allowed_choice_count(question.question_type)
         if len(user_choices) != allowed_choices:
             return HttpResponse("Please select %s options" % allowed_choices)
         selected_choice = question.choice_set.filter(
             pk__in=user_choices)
-        print[c.id for c in selected_choice], type(selected_choice)
+        # Change to c.id to store id of choices instead
         selected_choice = ",".join([str(c.choice_text)
                                     for c in selected_choice])
 
@@ -107,7 +103,6 @@ def signup(request):
             return redirect('/predict')
     else:
         form = UserCreationForm()
-    print "can't create user"
     return render(request, 'prediction_app/signup.html', {'form': form})
 
 
@@ -116,7 +111,6 @@ def send(request):
     email = request.POST.get('mail')
     reward = request.GET.get("reward")
     email = email.split(',')
-    print email, 'email', type(email)
     subject = 'Invitation to ZPL'
     link = 'https://zomato.com'
     template = get_template('share_email.txt')
@@ -131,22 +125,13 @@ def send(request):
 
 def activity(request):
     all_activity = Activity.objects.filter(user_field=request.user)
-    total_reward = Activity.objects.filter(user_field=request.user).aggregate(Sum('reward'))
+    total_reward = all_activity.aggregate(Sum('reward'))
     return render(request, 'prediction_app/activity.html',
                   {'all_activity': all_activity, 'total_reward': total_reward['reward__sum']})
 
 def leaderboard(request):
     leaderboard = Activity.objects.values('user_field__username').annotate(user_reward=Sum('reward')).order_by('-user_reward')
     # leaderboard = User.objects.annotate(total_reward=Sum('activity__reward'))[0].reward
-    print leaderboard
     return render(request, 'prediction_app/leaderboard.html',
                   {'leaderboard': leaderboard})
-
-
-    
-
-
-
-
-
 
