@@ -35,7 +35,7 @@ _auth\_user_
 | first\_name | varchar(30) |
 | last\_name | varchar(30) |
 
-1. Active Matches
+2. Active Matches
 
 Stores the information for all active (ongoing) matches in the system. The information is updated/deleted based on data updates in partner at a given polling frequency. The table also has a reference to match id being fetched from partner.
 
@@ -47,7 +47,7 @@ _activematches_
 | match\_id | smallint unsigned |
 | match\_completed | bool |
 
-1. Question
+3. Question
 
 Each match will have certain set of questions to be entered by admin. Stores the correct answer for each question along with the type of question (multiple correct/single correct).
 
@@ -60,7 +60,7 @@ _question_
 | match\_id | Foreign key(Active Matches) |
 | question\_type | varchar(1) |
 
-1. Choice
+4. Choice
 
 Admin entered choices for a given question to be displayed in the contest.
 
@@ -71,7 +71,7 @@ _choice_
 | question\_id | Foreign key (Question) |
 | choice\_text | varchar(200) |
 
-1. Participants
+5. Participants
 
 All information for currently ongoing contest goes here. It stores the answers committed by each user during the contest and then updates the rewards once the contest ends.
 
@@ -84,7 +84,7 @@ _participants_
 | user\_field\_id | Foreign key (User) |
 | reward | smallint unsigned |
 
-1. Activity
+6. Activity
 
 This table is a copy of _Participants_ table except the fact that its never cleaned up (for the sake of My activity page). Also, this table doesn&#39;t have foreign key to Active Matches and thus cleanup doesn&#39;t purge entries from this table.
 
